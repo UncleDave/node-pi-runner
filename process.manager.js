@@ -9,7 +9,8 @@ class ProcessManager {
     const process = spawn(name, args);
 
     process.stdout.on('data', data => {
-      ProcessManager._log(tag, data, ': ');
+      // Data is a decimal byte array - filter out line breaks.
+      ProcessManager._log(tag, data.filter(x => x !== 10), ': ');
     });
 
     process.on('close', code => {

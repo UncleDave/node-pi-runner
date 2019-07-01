@@ -4,16 +4,9 @@ class ScriptManager {
     this._processManager = processManager;
   }
 
-  register(script, callback) {
-    this._scriptFileManager.save(script, (err, path) => {
-      if (err) {
-        callback(err);
-        return;
-      }
-
-      this._processManager.start('python', script.name, path);
-      callback();
-    });
+  register(script) {
+    return this._scriptFileManager.save(script)
+      .then(path => this._processManager.start('python', script.name, path));
   }
 }
 

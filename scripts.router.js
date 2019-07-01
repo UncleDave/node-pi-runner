@@ -22,11 +22,9 @@ router.post('/:name', (req, res) => {
   const scriptName = req.params.name;
   const script = new Script(scriptName, req.body);
 
-  scriptManager.register(script, (err) => {
-    const status = err ? 500 : 204;
-
-    res.sendStatus(status);
-  });
+  scriptManager.register(script)
+    .then(() => res.sendStatus(204))
+    .catch(() => res.sendStatus(500));
 });
 
 module.exports = router;
